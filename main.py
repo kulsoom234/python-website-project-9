@@ -1,30 +1,45 @@
-# project 9 build a python website in 15 minutes with streamlit
-
 import streamlit as st
 import pandas as pd
 import random
 
+# Page configuration
 st.set_page_config(page_title="Student Data Generator", layout="wide")
-st.title("Student CSV File Generator")
+st.title("🎓 Student CSV File Generator")
 
-names = ["Kulsoom", "Farrukh" , "Amna", "Sufyan" , "Urwa" , "Rameen", "Jveriya", "Babar", "Annie" , "Dua"
-"Kiran", "Imran" , "Kashif", "Rahim", "Rahman", "Fatima", "Zainab"]
+# List of student names
+names = [
+    "Kulsoom", "Farrukh", "Amna", "Sufyan", "Urwa", "Rameen", "Jveriya",
+    "Babar", "Annie", "Dua", "Kiran", "Imran", "Kashif", "Rahim", "Rahman",
+    "Fatima", "Zainab"
+]
 
+# Generate student data
 students = []
-for i in range(1,17):
+for i in range(1, 18):  # 17 students
     student = {
-        "ID" : i,
-        "Name" : random.choice(names),
-        "Age" : random.randint(18,25),
-        "Grade" : random.choice(["A","B","C","D","E","F"]),
-        "Marks" : random.randint(40,100)
+        "ID": i,
+        "Name": random.choice(names),
+        "Age": random.randint(18, 25),
+        "Grade": random.choice(["A", "B", "C", "D", "E", "F"]),
+        "Marks": random.randint(40, 100)
     }
-    students.append(students)
+    students.append(student)
 
-    df = pd.DataFrame(students)
-    st.subheader("Generated Students Data")
-    st.dataframe(df)
+# Convert to DataFrame
+df = pd.DataFrame(students)
 
-    csv_file = df.to_csv(index=False).encode('utf-8')
-    st.download_button("Download CSV File", csv_file, "students.csv", "text/csv" )
-    st.success("Students Record Generated Successfully! ")
+# Display data
+st.subheader("📊 Generated Students Data")
+st.dataframe(df, use_container_width=True)
+
+# Download CSV
+csv = df.to_csv(index=False).encode('utf-8')
+st.download_button(
+    label="⬇️ Download CSV File",
+    data=csv,
+    file_name='students.csv',
+    mime='text/csv'
+)
+
+# Success message
+st.success("✅ Students Record Generated Successfully!")
